@@ -33,6 +33,18 @@ RUN iocStats/install.sh 3.2.0
 #  TODO - Add further support module installations here
 ################################################################################
 
+######## PH 23/09/24 - add asyn and streamdev per tutorial https://epics-containers.github.io/main/tutorials/generic_ioc.html#initial-changes-to-the-dockerfile 
+COPY ibek-support/asyn/ asyn/
+RUN asyn/install.sh R4-44-2
+
+COPY ibek-support/StreamDevice/ StreamDevice/
+RUN StreamDevice/install.sh 2.8.26
+
+COPY ibek-support/lakeshore340/ lakeshore340/
+RUN lakeshore340/install.sh 2-6-2
+
+########
+
 # get the ioc source and build it
 COPY ioc ${SOURCE_FOLDER}/ioc
 RUN cd ${IOC} && ./install.sh && make

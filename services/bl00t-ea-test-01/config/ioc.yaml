@@ -1,0 +1,26 @@
+# yaml-language-server: $schema=/tmp/ibek.ioc.schema.json
+
+ioc_name: "{{ _global.get_env('IOC_NAME') }}"
+
+description: example IOC for testing lakeshore340
+
+entities:
+  - type: epics.EpicsEnvSet
+    name: EPICS_TZ
+    value: GMT0BST
+
+  - type: devIocStats.iocAdminSoft
+    IOC: "{{ ioc_name | upper }}"
+
+  - type: asyn.AsynIP
+    name: p1
+    port: 127.0.0.1:5401
+
+  - type: lakeshore340.lakeshore340
+    ADDR: 12
+    LOOP: 2
+    P: BL16I-EA-LS340-01
+    PORT: p1
+    SCAN: 5
+    TEMPSCAN: 2
+    name: lakeshore
